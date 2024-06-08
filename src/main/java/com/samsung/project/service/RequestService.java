@@ -36,8 +36,7 @@ public class RequestService {
         this.approverTemplateRepo = approverTemplateRepo;
     }
 
-    public int addRequest(RequestDto<RequestFormValue> requestDto) {
-        //insert Request
+    public int createRequest(RequestDto<RequestFormValue> requestDto) {
         Request request = new Request();
         request.setResourceId(requestDto.getResourceId());
         request.setPurpose(requestDto.getPurpose());
@@ -48,7 +47,6 @@ public class RequestService {
         request.setStatus(requestDto.getStatus());
         requestRepo.insertRequest(request);
 
-        //insert request Approval
         RequestApproval requestApproval = new RequestApproval();
         int id = approverTemplateRepo.getApproverById(requestDto.getResourceId()).getUserId();
         int lastRequestId = requestRepo.lastRequestId();
@@ -57,7 +55,6 @@ public class RequestService {
         requestApproval.setApprovalStatus("awaiting");
         requestApprovalRepo.addRequestApproval(requestApproval);
 
-        //insert template approval template
         addRequestFormValue(requestDto, lastRequestId);
         return 1;
     }
@@ -107,24 +104,24 @@ public class RequestService {
     }
 
     private void addRequestFormValue(RequestDto<RequestFormValue> requestDto, int lastRequestId) {
-        TemplateFromBuilder[] templateFromBuilders = templateFormBuilderRepo.getTemplateFromBuilderById(requestDto.getResourceId());
+        List<TemplateFromBuilder> templateFromBuilders = templateFormBuilderRepo.getTemplateFromBuilderById(requestDto.getResourceId());
         RequestFormValue[] requestFormValues = requestDto.getRequestFormValueData();
 
         RequestFormValue requestFormValue = new RequestFormValue();
-        for (int index = 0; index < templateFromBuilders.length; index++) {
-            requestFormValue.setLabel(templateFromBuilders[index].getLabel());
-            requestFormValue.setPlaceholder(templateFromBuilders[index].getPlaceholder());
-            requestFormValue.setRequired(templateFromBuilders[index].isRequired());
-            requestFormValue.setLayout(templateFromBuilders[index].getLayout());
-            requestFormValue.setOptions(templateFromBuilders[index].getOptions());
+        for (int index = 0; index < templateFromBuilders.size(); index++) {
+            requestFormValue.setLabel(templateFromBuilders.get(index).getLabel());
+            requestFormValue.setPlaceholder(templateFromBuilders.get(index).getPlaceholder());
+            requestFormValue.setRequired(templateFromBuilders.get(index).isRequired());
+            requestFormValue.setLayout(templateFromBuilders.get(index).getLayout());
+            requestFormValue.setOptions(templateFromBuilders.get(index).getOptions());
             requestFormValue.setRequestId(lastRequestId);
             requestFormValue.setTemplateId(requestDto.getResourceId());
-            requestFormValue.setCreateUserId(templateFromBuilders[index].getCreateUserId());
+            requestFormValue.setCreateUserId(templateFromBuilders.get(index).getCreateUserId());
             requestFormValue.setCreatedAt(LocalDateTime.now());
             requestFormValue.setUpdatedAt(LocalDateTime.now());
-            requestFormValue.setFormatDateTime(templateFromBuilders[index].getFormatDateTime());
+            requestFormValue.setFormatDateTime(templateFromBuilders.get(index).getFormatDateTime());
             requestFormValue.setValue(requestFormValues[index].getValue());
-            requestFormValue.setType(templateFromBuilders[index].getType());
+            requestFormValue.setType(templateFromBuilders.get(index).getType());
             requestFormValueRepo.addRequestFormValue(requestFormValue);
 
         }

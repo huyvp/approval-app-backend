@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class TemplateDto<T> {
+public class TemplateDTO<T> {
     private String description;
     private String name;
     private boolean status;

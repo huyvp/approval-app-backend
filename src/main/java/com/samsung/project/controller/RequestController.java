@@ -23,7 +23,7 @@ public class RequestController {
 
     @PostMapping
     public ResponseEntity<?> addRequest(@RequestBody RequestDto<RequestFormValue> RequestDto) {
-        if (requestService.addRequest(RequestDto) > 0) {
+        if (requestService.createRequest(RequestDto) > 0) {
             return ResponseEntity.ok("Created success");
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Create Failed");

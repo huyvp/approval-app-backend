@@ -1,6 +1,6 @@
 package com.samsung.project.controller;
 
-import com.samsung.project.dto.TemplateDto;
+import com.samsung.project.dto.TemplateDTO;
 import com.samsung.project.model.TemplateFromBuilder;
 import com.samsung.project.service.TemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +21,8 @@ public class TemplateController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addTemplate(@RequestBody TemplateDto<TemplateFromBuilder> templateDto) {
-        if (templateService.insertTemplate(templateDto)) {
+    public ResponseEntity<?> addTemplate(@RequestBody TemplateDTO<TemplateFromBuilder> templateDto) {
+        if (templateService.createTemplate(templateDto)) {
             return ResponseEntity.ok("Created template");
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Template name already exists");
@@ -30,7 +30,7 @@ public class TemplateController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateTemplate(@RequestBody TemplateDto<TemplateFromBuilder> templateDto, @PathVariable int id) {
+    public ResponseEntity<?> updateTemplate(@RequestBody TemplateDTO<TemplateFromBuilder> templateDto, @PathVariable int id) {
         if (templateService.updateTemplate(templateDto, id)) {
             return ResponseEntity.ok("Update successfully");
         } else {
