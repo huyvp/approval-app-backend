@@ -5,7 +5,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.samsung.project.exception.ErrorHttpResponse;
 import com.samsung.project.model.Authority;
 import com.samsung.project.model.User;
-import com.samsung.project.service.authority.AuthorityService;
+import com.samsung.project.service.AuthorityService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;

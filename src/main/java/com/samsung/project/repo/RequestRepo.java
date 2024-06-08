@@ -1,9 +1,10 @@
-package com.samsung.project.repo.request;
+package com.samsung.project.repo;
 
-import com.samsung.project.dto.request.RequestDto;
-import com.samsung.project.dto.request.RequestDetail;
+import com.samsung.project.dto.RequestDto;
+import com.samsung.project.dto.RequestDetail;
 
-import com.samsung.project.model.request.*;
+import com.samsung.project.model.Request;
+import com.samsung.project.model.RequestFormValue;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

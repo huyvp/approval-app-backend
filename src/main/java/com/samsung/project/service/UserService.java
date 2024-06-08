@@ -1,4 +1,4 @@
-package com.samsung.project.service.user;
+package com.samsung.project.service;
 
 import com.samsung.project.model.Authority;
 import com.samsung.project.model.User;

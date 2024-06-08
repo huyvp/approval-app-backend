@@ -1,7 +1,7 @@
 package com.samsung.project.controller;
 
 import com.samsung.project.model.User;
-import com.samsung.project.service.user.UserService;
+import com.samsung.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

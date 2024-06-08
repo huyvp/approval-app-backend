@@ -1,15 +1,16 @@
-package com.samsung.project.service.request;
+package com.samsung.project.service;
 
-import com.samsung.project.dto.request.*;
-import com.samsung.project.model.request.Request;
-import com.samsung.project.model.request.RequestApproval;
-import com.samsung.project.model.request.RequestFormValue;
-import com.samsung.project.model.template.TemplateFromBuilder;
-import com.samsung.project.repo.request.RequestApprovalRepo;
-import com.samsung.project.repo.request.RequestFormValueRepo;
-import com.samsung.project.repo.request.RequestRepo;
-import com.samsung.project.repo.template.ApproverTemplateRepo;
-import com.samsung.project.repo.template.TemplateFormBuilderRepo;
+import com.samsung.project.dto.RequestDetail;
+import com.samsung.project.dto.RequestDto;
+import com.samsung.project.model.Request;
+import com.samsung.project.model.RequestApproval;
+import com.samsung.project.model.RequestFormValue;
+import com.samsung.project.model.TemplateFromBuilder;
+import com.samsung.project.repo.RequestApprovalRepo;
+import com.samsung.project.repo.RequestFormValueRepo;
+import com.samsung.project.repo.RequestRepo;
+import com.samsung.project.repo.ApproverTemplateRepo;
+import com.samsung.project.repo.TemplateFormBuilderRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

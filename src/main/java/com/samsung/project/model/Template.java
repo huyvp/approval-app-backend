@@ -1,4 +1,4 @@
-package com.samsung.project.model.request;
+package com.samsung.project.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -10,15 +10,14 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Request {
+public class Template {
     private int id;
-    private int resourceId;
-    private String purpose;
-    private String note;
-    private long createUserId;
-    @JsonFormat(pattern = "a hh:mm dd/MM/yyyy")
+    private String description;
+    private String name;
+    private boolean status;
+    private int createUserId;
+    @JsonFormat(pattern = "a hh:mm, dd/MM/yyyy")
     private LocalDateTime createdAt;
-    @JsonFormat(pattern = "a hh:mm dd/MM/yyyy")
+    @JsonFormat(pattern = "a hh:mm, dd/MM/yyyy")
     private LocalDateTime updatedAt;
-    private String status;
 }

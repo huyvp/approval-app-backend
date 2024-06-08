@@ -1,6 +1,6 @@
 package com.samsung.project.security;
 
-import com.samsung.project.service.user.UserService;
+import com.samsung.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;

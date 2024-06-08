@@ -1,6 +1,6 @@
-package com.samsung.project.repo.template;
+package com.samsung.project.repo;
 
-import com.samsung.project.model.template.TemplateFromBuilder;
+import com.samsung.project.model.TemplateFromBuilder;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -26,7 +26,7 @@ public interface TemplateFormBuilderRepo {
     @Update("UPDATE template_form_builder SET label = #{label},name = #{name},placeholder = #{placeholder},required = #{required},layout = #{layout},options = #{options},updated_at = #{updatedAt},format_date_time = #{formatDateTime}, value = #{value},type = #{type} WHERE template_id = #{templateId}")
     public int updateTempFormBuilder(TemplateFromBuilder templateFromBuilder);
     @Select("SELECT * FROM template_form_builder WHERE template_id = #{templateId}")
-    public TemplateFromBuilder[] getTemplateFromBuilderById(int id);
+    public List<TemplateFromBuilder> getTemplateFromBuilderById(int id);
     @Delete("DELETE FROM template_form_builder WHERE template_id = #{templateId}")
     public int deleteTempFormBuilder(int templateId);
 }

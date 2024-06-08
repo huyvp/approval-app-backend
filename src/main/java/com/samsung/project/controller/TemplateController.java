@@ -1,8 +1,8 @@
 package com.samsung.project.controller;
 
-import com.samsung.project.dto.template.TemplateDto;
-import com.samsung.project.model.template.TemplateFromBuilder;
-import com.samsung.project.service.template.TemplateService;
+import com.samsung.project.dto.TemplateDto;
+import com.samsung.project.model.TemplateFromBuilder;
+import com.samsung.project.service.TemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

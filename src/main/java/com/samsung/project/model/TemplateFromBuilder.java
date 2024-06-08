@@ -1,4 +1,4 @@
-package com.samsung.project.model.template;
+package com.samsung.project.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

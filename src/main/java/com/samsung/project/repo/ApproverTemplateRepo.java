@@ -1,6 +1,6 @@
-package com.samsung.project.repo.template;
+package com.samsung.project.repo;
 
-import com.samsung.project.model.template.ApproverTemplate;
+import com.samsung.project.model.ApproverTemplate;
 import org.apache.ibatis.annotations.*;
 
 @Mapper

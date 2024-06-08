@@ -1,9 +1,9 @@
-package com.samsung.project.repo.template;
+package com.samsung.project.repo;
 
-import com.samsung.project.dto.template.TemplateDto;
-import com.samsung.project.dto.template.TemplateDetail;
-import com.samsung.project.model.template.Template;
-import com.samsung.project.model.template.TemplateFromBuilder;
+import com.samsung.project.dto.TemplateDto;
+import com.samsung.project.dto.TemplateDetail;
+import com.samsung.project.model.Template;
+import com.samsung.project.model.TemplateFromBuilder;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

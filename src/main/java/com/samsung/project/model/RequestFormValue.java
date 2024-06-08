@@ -1,4 +1,4 @@
-package com.samsung.project.model.request;
+package com.samsung.project.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

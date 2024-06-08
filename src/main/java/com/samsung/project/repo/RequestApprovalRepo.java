@@ -1,6 +1,6 @@
-package com.samsung.project.repo.request;
+package com.samsung.project.repo;
 
-import com.samsung.project.model.request.*;
+import com.samsung.project.model.RequestApproval;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

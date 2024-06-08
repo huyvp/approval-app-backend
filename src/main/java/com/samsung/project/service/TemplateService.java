@@ -1,13 +1,13 @@
-package com.samsung.project.service.template;
+package com.samsung.project.service;
 
-import com.samsung.project.dto.template.TemplateDto;
-import com.samsung.project.dto.template.TemplateDetail;
-import com.samsung.project.model.template.ApproverTemplate;
-import com.samsung.project.model.template.Template;
-import com.samsung.project.model.template.TemplateFromBuilder;
-import com.samsung.project.repo.template.ApproverTemplateRepo;
-import com.samsung.project.repo.template.TemplateFormBuilderRepo;
-import com.samsung.project.repo.template.TemplateRepo;
+import com.samsung.project.dto.TemplateDto;
+import com.samsung.project.dto.TemplateDetail;
+import com.samsung.project.model.ApproverTemplate;
+import com.samsung.project.model.Template;
+import com.samsung.project.model.TemplateFromBuilder;
+import com.samsung.project.repo.ApproverTemplateRepo;
+import com.samsung.project.repo.TemplateFormBuilderRepo;
+import com.samsung.project.repo.TemplateRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +36,7 @@ public class TemplateService {
         for (Template temp : templates) {
             result = !temp.getName().equals(templateDto.getName());
         }
-        if (result || templates.size() == 0) {
+        if (result || templates.isEmpty()) {
             // insert template
             Template template = new Template();
             template.setDescription(templateDto.getDescription());
@@ -55,7 +55,7 @@ public class TemplateService {
             approverTemplateRepo.insertApprover(approverTemplate);
 
             // insert template form builder
-            TemplateFromBuilder[] templateFromBuilders = templateDto.getBuilderData();
+            List<TemplateFromBuilder> templateFromBuilders = templateDto.getBuilderData();
             for (TemplateFromBuilder item : templateFromBuilders) {
                 item.setCreateUserId(templateDto.getCreateUserId());
                 item.setCreatedAt(LocalDateTime.now());
@@ -100,7 +100,7 @@ public class TemplateService {
             approverTemplateRepo.updateApprover(approverTemplate);
 
             // insert template form builder
-            TemplateFromBuilder[] templateFromBuilders = templateDto.getBuilderData();
+            List<TemplateFromBuilder> templateFromBuilders = templateDto.getBuilderData();
             templateFormBuilderRepo.deleteTempFormBuilder(id);
             for (TemplateFromBuilder item : templateFromBuilders) {
                 item.setCreateUserId(templateDto.getCreateUserId());

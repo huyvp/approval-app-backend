@@ -1,4 +1,4 @@
-package com.samsung.project.dto.request;
+package com.samsung.project.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

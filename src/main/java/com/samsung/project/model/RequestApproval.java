@@ -1,4 +1,4 @@
-package com.samsung.project.dto.request;
+package com.samsung.project.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -6,15 +6,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-@Data
+
 @AllArgsConstructor
 @NoArgsConstructor
-public class RequestDetail {
-    private int id;
-    private String requests;
-    private String description;
-    private String approver;
+@Data
+public class RequestApproval {
+    private int userId;
+    private int requestId;
+    private String approvalStatus;
     @JsonFormat(pattern = "a hh:mm dd/MM/yyyy")
-    private LocalDateTime updatedAt;
-    private String status;
+    private LocalDateTime approvalTime;
+    private String comment;
 }

@@ -1,9 +1,9 @@
 package com.samsung.project.controller;
 
-import com.samsung.project.dto.request.RequestDto;
-import com.samsung.project.model.request.RequestApproval;
-import com.samsung.project.model.request.RequestFormValue;
-import com.samsung.project.service.request.RequestService;
+import com.samsung.project.dto.RequestDto;
+import com.samsung.project.model.RequestApproval;
+import com.samsung.project.model.RequestFormValue;
+import com.samsung.project.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
