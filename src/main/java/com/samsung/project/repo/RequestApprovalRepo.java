@@ -7,23 +7,23 @@ import java.util.List;
 
 @Mapper
 public interface RequestApprovalRepo {
-//    private int userId;
-//    private int requestId;
-//    private boolean approvalStatus;
-//    private LocalDateTime approvalTime;
-//    private String comment;
     @Insert("INSERT INTO request_approval(user_id,request_id,approval_status) VALUES(#{userId},#{requestId},#{approvalStatus})")
-    public int addRequestApproval(RequestApproval requestApproval);
+    public int insert(RequestApproval requestApproval);
 
     @Update("UPDATE request_approval SET approval_status=#{requestApproval.approvalStatus},approval_time=#{requestApproval.approvalTime}, comment=#{requestApproval.comment} " +
             "WHERE request_id=#{requestId}")
-    public int updateRequestApproval(RequestApproval requestApproval,int requestId);
+    public int update(RequestApproval requestApproval, int requestId);
+
+    @Update("UPDATE request_approval SET approval_status=#{status} " +
+            "WHERE request_id=#{requestId}")
+    public int updateStatus(String status, int requestId);
 
     @Delete("DELETE FROM request_approval WHERE request_id=#{id}")
-    public int deleteRequestApproval(int id);
+    public int delete(int id);
 
-    @Select("SELECT user_id From request_approval Where request_id=#{id}")
-    public List<Integer> getUserApprovalById(int id);
-    @Select("SELECT comment From request_approval Where request_id=#{id}")
-    public String getNoteApprove(int id);
+    @Select("SELECT * FROM request_approval WHERE request_id=#{id}")
+    public RequestApproval findByRequestId(int id);
+
+    @Select("SELECT comment FROM request_approval WHERE request_id=#{id}")
+    public String findNoteApprove(int id);
 }

@@ -1,6 +1,6 @@
 package com.samsung.project.controller;
 
-import com.samsung.project.dto.RequestDto;
+import com.samsung.project.dto.RequestDTO;
 import com.samsung.project.model.RequestApproval;
 import com.samsung.project.model.RequestFormValue;
 import com.samsung.project.service.RequestService;
@@ -22,16 +22,13 @@ public class RequestController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addRequest(@RequestBody RequestDto<RequestFormValue> RequestDto) {
-        if (requestService.createRequest(RequestDto) > 0) {
-            return ResponseEntity.ok("Created success");
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Create Failed");
-        }
+    public ResponseEntity<?> addRequest(@RequestBody RequestDTO<RequestFormValue> requestDTO) {
+        requestService.createRequest(requestDTO);
+        return ResponseEntity.status(HttpStatus.OK).body("Create request successfully");
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateRequest(@RequestBody RequestDto<RequestFormValue> requestDto, @PathVariable int id) {
+    public ResponseEntity<?> updateRequest(@RequestBody RequestDTO<RequestFormValue> requestDto, @PathVariable int id) {
         if (requestService.updateRequest(requestDto, id) > 0) {
             return ResponseEntity.ok("update success");
         } else {
@@ -41,11 +38,8 @@ public class RequestController {
 
     @PutMapping("/approval/{id}")
     public ResponseEntity<?> updateRequestApproval(@RequestBody RequestApproval requestApproval, @PathVariable int id) {
-        if (requestService.updateWhenApproval(requestApproval, id) > 0) {
-            return ResponseEntity.ok("Approved success");
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Approved failed");
-        }
+        requestService.updateWhenApproval(requestApproval, id);
+        return ResponseEntity.ok("Approved success");
     }
 
     @DeleteMapping("/{id}")
@@ -59,7 +53,7 @@ public class RequestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getRequestDTO(@PathVariable int id) {
-        return ResponseEntity.ok(requestService.getRequestDto(id));
+        return ResponseEntity.ok(requestService.getRequestValue(id));
     }
 
     @GetMapping("/list")
@@ -69,7 +63,7 @@ public class RequestController {
 
     @GetMapping("/myRequest/{id}")
     public ResponseEntity<?> getMyRequestDetail(@PathVariable int id) {
-        return ResponseEntity.ok(requestService.getMyRequestDetail(id));
+        return ResponseEntity.ok(requestService.getRequestOfUser(id));
     }
 
     @GetMapping("/process/{id}")

@@ -6,10 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class RequestDto<T> {
+public class RequestDTO<T> {
     private int id;
     private int resourceId;
     private String purpose;
@@ -20,5 +22,5 @@ public class RequestDto<T> {
     @JsonFormat(pattern = "a hh:mm dd/MM/yyyy")
     private LocalDateTime updatedAt;
     private String status;
-    private T[] requestFormValueData;
+    private List<T> requestFormData;
 }

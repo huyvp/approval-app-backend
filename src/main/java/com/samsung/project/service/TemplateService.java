@@ -58,7 +58,7 @@ public class TemplateService {
             item.setCreatedAt(LocalDateTime.now());
             item.setUpdatedAt(LocalDateTime.now());
             item.setTemplateId(templateSaved.getId());
-            templateFormBuilderRepo.insertTempFormBuilder(item);
+            templateFormBuilderRepo.insert(item);
         }
     }
 
@@ -87,13 +87,13 @@ public class TemplateService {
         }
 
         List<TemplateFromBuilder> templateFromBuilders = templateDTO.getBuilderData();
-        templateFormBuilderRepo.deleteTempFormBuilder(id);
+        templateFormBuilderRepo.delete(id);
         for (TemplateFromBuilder item : templateFromBuilders) {
             item.setCreateUserId(templateDTO.getCreateUserId());
             item.setCreatedAt(LocalDateTime.now());
             item.setUpdatedAt(LocalDateTime.now());
             item.setTemplateId(id);
-            templateFormBuilderRepo.insertTempFormBuilder(item);
+            templateFormBuilderRepo.insert(item);
         }
     }
 
@@ -107,14 +107,14 @@ public class TemplateService {
             throw new RuntimeException("The approver template does not exist!");
         }
         approverTemplateRepo.delete(id);
-        templateFormBuilderRepo.deleteTempFormBuilder(id);
+        templateFormBuilderRepo.delete(id);
         templateRepo.delete(id);
     }
 
     public TemplateDTO<TemplateFromBuilder> getTemplateValue(int id) {
         TemplateDTO<TemplateFromBuilder> templateDto;
         templateDto = templateRepo.findValue(id);
-        templateDto.setBuilderData(templateFormBuilderRepo.getTemplateFromBuilderById(id));
+        templateDto.setBuilderData(templateFormBuilderRepo.findById(id));
         return templateDto;
     }
 
