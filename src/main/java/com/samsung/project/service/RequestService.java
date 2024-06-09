@@ -48,7 +48,7 @@ public class RequestService {
         requestRepo.insertRequest(request);
 
         RequestApproval requestApproval = new RequestApproval();
-        int id = approverTemplateRepo.getApproverById(requestDto.getResourceId()).getUserId();
+        int id = approverTemplateRepo.findById(requestDto.getResourceId()).getUserId();
         int lastRequestId = requestRepo.lastRequestId();
         requestApproval.setUserId(id);
         requestApproval.setRequestId(lastRequestId);
@@ -71,7 +71,7 @@ public class RequestService {
 
 //        //update request Approval
 //        RequestApproval requestApproval = new RequestApproval();
-//        int templateId = approverTemplateRepo.getApproverById(requestDto.getResourceId()).getUserId();
+//        int templateId = approverTemplateRepo.findById(requestDto.getResourceId()).getUserId();
 //        int lastRequestId = requestRepo.lastRequestId();
 //        requestApprovalRepo.deleteRequestApproval(id);
 //        requestApproval.setUserId(templateId);
@@ -87,7 +87,7 @@ public class RequestService {
             addRequestFormValue(requestDto, id);
             //update request Approval
             RequestApproval requestApproval = new RequestApproval();
-            int templateId = approverTemplateRepo.getApproverById(requestDto.getResourceId()).getUserId();
+            int templateId = approverTemplateRepo.findById(requestDto.getResourceId()).getUserId();
             int lastRequestId = requestRepo.lastRequestId();
             requestApprovalRepo.deleteRequestApproval(id);
             requestApproval.setUserId(templateId);

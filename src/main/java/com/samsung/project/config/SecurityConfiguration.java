@@ -1,6 +1,5 @@
 package com.samsung.project.config;
 
-import com.samsung.project.service.UsernamePasswordAuthenticationProvider;
 import com.samsung.project.security.CorsFilter;
 import com.samsung.project.security.InitialAuthenticationFilter;
 import com.samsung.project.security.JwtAuthenticationFilter;

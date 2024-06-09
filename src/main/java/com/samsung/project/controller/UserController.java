@@ -1,10 +1,13 @@
 package com.samsung.project.controller;
 
+import com.samsung.project.dto.UserDTO;
 import com.samsung.project.model.User;
 import com.samsung.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -16,8 +19,8 @@ public class UserController {
         this.userService = userService;
     }
     @PostMapping
-    public ResponseEntity<?> createUser(@RequestBody User user){
-        userService.createUser(user);
+    public ResponseEntity<?> createUser(@RequestBody @Valid UserDTO userDTO){
+        userService.createUser(userDTO);
         return ResponseEntity.ok("created user");
     }
     @GetMapping

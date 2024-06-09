@@ -4,7 +4,6 @@ import com.samsung.project.dto.TemplateDTO;
 import com.samsung.project.model.TemplateFromBuilder;
 import com.samsung.project.service.TemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -22,35 +21,27 @@ public class TemplateController {
 
     @PostMapping
     public ResponseEntity<?> addTemplate(@RequestBody TemplateDTO<TemplateFromBuilder> templateDto) {
-        if (templateService.createTemplate(templateDto)) {
-            return ResponseEntity.ok("Created template");
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Template name already exists");
-        }
+        templateService.createTemplate(templateDto);
+        return ResponseEntity.ok("Created template");
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateTemplate(@RequestBody TemplateDTO<TemplateFromBuilder> templateDto, @PathVariable int id) {
-        if (templateService.updateTemplate(templateDto, id)) {
-            return ResponseEntity.ok("Update successfully");
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Template name already exists");
-        }
+        templateService.updateTemplate(templateDto, id);
+        return ResponseEntity.ok("Update successfully");
+
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteTemplate(@PathVariable int id) {
-        if (templateService.deleteTemplate(id)) {
-            return ResponseEntity.ok("Delete successfully");
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error");
-        }
+        templateService.deleteTemplate(id);
+        return ResponseEntity.ok("Delete successfully");
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @GetMapping("/{id}")
-    public ResponseEntity<?> getTemplateDto(@PathVariable int id) {
-        return ResponseEntity.ok(templateService.getTemplateDto(id));
+    public ResponseEntity<?> getTemplateValue(@PathVariable int id) {
+        return ResponseEntity.ok(templateService.getTemplateValue(id));
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','USER')")

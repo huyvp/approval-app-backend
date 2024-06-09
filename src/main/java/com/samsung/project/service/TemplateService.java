@@ -1,13 +1,13 @@
 package com.samsung.project.service;
 
 import com.samsung.project.dto.TemplateDTO;
-import com.samsung.project.dto.TemplateDetail;
 import com.samsung.project.model.ApproverTemplate;
 import com.samsung.project.model.Template;
 import com.samsung.project.model.TemplateFromBuilder;
 import com.samsung.project.repo.ApproverTemplateRepo;
 import com.samsung.project.repo.TemplateFormBuilderRepo;
 import com.samsung.project.repo.TemplateRepo;
+import com.samsung.project.response.TemplateDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +30,7 @@ public class TemplateService {
         this.templateFormBuilderRepo = templateFormBuilderRepo;
     }
 
-    public boolean createTemplate(TemplateDTO<TemplateFromBuilder> templateDTO) {
+    public void createTemplate(TemplateDTO<TemplateFromBuilder> templateDTO) {
         Template existingTemplate = templateRepo.findByName(templateDTO.getName());
         if (existingTemplate != null) {
             throw new RuntimeException("The template already exists!");
@@ -43,14 +43,14 @@ public class TemplateService {
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
-        templateRepo.insertTemplate(template);
+        templateRepo.insert(template);
 
         Template templateSaved = templateRepo.findByName(templateDTO.getName());
         ApproverTemplate approverTemplate = ApproverTemplate.builder()
                 .templateId(templateSaved.getId())
                 .userId(templateDTO.getCreateUserId())
                 .build();
-        approverTemplateRepo.insertApprover(approverTemplate);
+        approverTemplateRepo.insert(approverTemplate);
 
         List<TemplateFromBuilder> templateFromBuilders = templateDTO.getBuilderData();
         for (TemplateFromBuilder item : templateFromBuilders) {
@@ -60,13 +60,12 @@ public class TemplateService {
             item.setTemplateId(templateSaved.getId());
             templateFormBuilderRepo.insertTempFormBuilder(item);
         }
-        return true;
     }
 
-    public boolean updateTemplate(TemplateDTO<TemplateFromBuilder> templateDTO, int id) {
+    public void updateTemplate(TemplateDTO<TemplateFromBuilder> templateDTO, int id) {
         Template existingTemplate = templateRepo.findById(id);
         if (existingTemplate == null) {
-            throw new RuntimeException("The template does not exist!");
+            throw new RuntimeException("This template does not exist!");
         }
         Template template = Template.builder()
                 .description(templateDTO.getDescription())
@@ -74,12 +73,18 @@ public class TemplateService {
                 .status(templateDTO.isStatus())
                 .updatedAt(LocalDateTime.now())
                 .build();
-        templateRepo.updateTemplate(template);
+        templateRepo.update(template);
 
-        ApproverTemplate approverTemplate = new ApproverTemplate();
-        approverTemplate.setTemplateId(id);
-        approverTemplate.setUserId(templateDTO.getApprover());
-        approverTemplateRepo.updateApprover(approverTemplate);
+        ApproverTemplate existingApprover = approverTemplateRepo.findById(id);
+        if (existingApprover == null) {
+            throw new RuntimeException("The approver template does not exist!");
+        }
+        if (existingApprover.getUserId() != templateDTO.getCreateUserId()) {
+            ApproverTemplate approver = ApproverTemplate.builder()
+                    .userId(templateDTO.getApprover())
+                    .build();
+            approverTemplateRepo.update(approver);
+        }
 
         List<TemplateFromBuilder> templateFromBuilders = templateDTO.getBuilderData();
         templateFormBuilderRepo.deleteTempFormBuilder(id);
@@ -90,32 +95,42 @@ public class TemplateService {
             item.setTemplateId(id);
             templateFormBuilderRepo.insertTempFormBuilder(item);
         }
-        return true;
     }
 
-    public boolean deleteTemplate(int id) {
-        approverTemplateRepo.deleteApprover(id);
+    public void deleteTemplate(int id) {
+        Template existingTemplate = templateRepo.findById(id);
+        if (existingTemplate == null) {
+            throw new RuntimeException("This template does not exist!");
+        }
+        ApproverTemplate existingApprover = approverTemplateRepo.findById(id);
+        if (existingApprover == null) {
+            throw new RuntimeException("The approver template does not exist!");
+        }
+        approverTemplateRepo.delete(id);
         templateFormBuilderRepo.deleteTempFormBuilder(id);
-        templateRepo.deleteTemplate(id);
-        return true;
+        templateRepo.delete(id);
     }
 
-    public TemplateDTO<TemplateFromBuilder> getTemplateDto(int id) {
+    public TemplateDTO<TemplateFromBuilder> getTemplateValue(int id) {
         TemplateDTO<TemplateFromBuilder> templateDto;
-        templateDto = templateRepo.getTemplateDto(id);
+        templateDto = templateRepo.findValue(id);
         templateDto.setBuilderData(templateFormBuilderRepo.getTemplateFromBuilderById(id));
         return templateDto;
     }
 
     public List<TemplateDetail> getTemplateList() {
-        return templateRepo.getTemplateList();
+        return templateRepo.findListDetail();
     }
 
     public List<TemplateDetail> getTemplateListActive() {
-        return templateRepo.getTemplateListActive();
+        return templateRepo.findListDetailActive();
     }
 
     public TemplateDetail getTemplateDetail(int id) {
-        return templateRepo.getTemplateDetail(id);
+        TemplateDetail templateDetail = templateRepo.findDetail(id);
+        if (templateDetail == null) {
+            throw new RuntimeException("This template does not exist!");
+        }
+        return templateDetail;
     }
 }
