@@ -1,15 +1,14 @@
 package com.samsung.project.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
 @Data
 public class ApproverTemplate {
-    private int userId;
-    private int templateId;
+    int userId;
+    int templateId;
 }

@@ -1,10 +1,8 @@
 package com.samsung.project.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
 
@@ -12,17 +10,18 @@ import static com.samsung.project.constant.Constants.Pattern.TIME;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
 @Data
 public class Request {
-    private int id;
-    private int resourceId;
-    private String purpose;
-    private String note;
-    private long createUserId;
+    int id;
+    int resourceId;
+    String purpose;
+    String note;
+    long createUserId;
     @JsonFormat(pattern = TIME)
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt;
     @JsonFormat(pattern = TIME)
-    private LocalDateTime updatedAt;
-    private String status;
+    LocalDateTime updatedAt;
+    String status;
 }

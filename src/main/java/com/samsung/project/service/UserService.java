@@ -1,11 +1,14 @@
 package com.samsung.project.service;
 
 import com.samsung.project.dto.UserDTO;
+import com.samsung.project.mapper.UserMapper;
 import com.samsung.project.model.Authority;
 import com.samsung.project.model.User;
 import com.samsung.project.repo.AuthorityRepo;
 import com.samsung.project.repo.UserRepo;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,18 +18,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 @Transactional
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserService {
-    private final UserRepo userRepo;
-    private final AuthorityRepo authorityRepo;
-    private final PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public UserService(UserRepo userRepo, AuthorityRepo authorityRepo, PasswordEncoder passwordEncoder) {
-        this.userRepo = userRepo;
-        this.authorityRepo = authorityRepo;
-        this.passwordEncoder = passwordEncoder;
-    }
+    UserRepo userRepo;
+    AuthorityRepo authorityRepo;
+    PasswordEncoder passwordEncoder;
+    UserMapper userMapper;
 
     public void createUser(UserDTO userDTO) {
         User existingUser = userRepo.findByName(userDTO.getUsername());

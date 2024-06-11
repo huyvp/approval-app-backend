@@ -4,7 +4,9 @@ import com.samsung.project.dto.RequestDTO;
 import com.samsung.project.model.*;
 import com.samsung.project.repo.*;
 import com.samsung.project.response.RequestDetailResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,23 +15,16 @@ import java.util.List;
 
 import static com.samsung.project.model.ApproveStatus.AWAITING;
 
-@Service
 @Transactional
+@Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class RequestService {
-    private final RequestRepo requestRepo;
-    private final RequestApprovalRepo requestApprovalRepo;
-    private final RequestFormValueRepo requestFormValueRepo;
-    private final TemplateFormBuilderRepo templateFormBuilderRepo;
-    private final ApproverTemplateRepo approverTemplateRepo;
-
-    @Autowired
-    public RequestService(RequestRepo requestRepo, RequestApprovalRepo requestApprovalRepo, RequestFormValueRepo requestFormValueRepo, TemplateFormBuilderRepo templateFormBuilderRepo, ApproverTemplateRepo approverTemplateRepo) {
-        this.requestRepo = requestRepo;
-        this.requestApprovalRepo = requestApprovalRepo;
-        this.requestFormValueRepo = requestFormValueRepo;
-        this.templateFormBuilderRepo = templateFormBuilderRepo;
-        this.approverTemplateRepo = approverTemplateRepo;
-    }
+    RequestRepo requestRepo;
+    RequestApprovalRepo requestApprovalRepo;
+    RequestFormValueRepo requestFormValueRepo;
+    TemplateFormBuilderRepo templateFormBuilderRepo;
+    ApproverTemplateRepo approverTemplateRepo;
 
     public void createRequest(RequestDTO<RequestFormValue> requestDTO) {
         try {

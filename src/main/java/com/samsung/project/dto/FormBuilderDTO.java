@@ -1,28 +1,27 @@
 package com.samsung.project.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
 @Data
 public class FormBuilderDTO {
-    private int requestId;
-    private String label;
-    private String placeholder;
-    private boolean required;
-    private String layout;
-    private String options;
-    private int templateId;
-    private int createUserId;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-    private LocalDateTime formatDateTime;
-    private String value;
-    private String type;
+    int requestId;
+    String label;
+    String placeholder;
+    boolean required;
+    String layout;
+    String options;
+    int templateId;
+    int createUserId;
+    LocalDateTime createdAt;
+    LocalDateTime updatedAt;
+    LocalDateTime formatDateTime;
+    String value;
+    String type;
 }

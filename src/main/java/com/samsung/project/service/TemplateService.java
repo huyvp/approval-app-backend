@@ -10,7 +10,9 @@ import com.samsung.project.repo.TemplateFormBuilderRepo;
 import com.samsung.project.repo.TemplateRepo;
 import com.samsung.project.response.TemplateDetailResponse;
 import com.samsung.project.response.TemplateValueResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,19 +20,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 @Transactional
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class TemplateService {
 
     private final TemplateRepo templateRepo;
     private final ApproverTemplateRepo approverTemplateRepo;
     private final TemplateFormBuilderRepo templateFormBuilderRepo;
-
-    @Autowired
-    public TemplateService(TemplateRepo templateRepo, ApproverTemplateRepo approverTemplateRepo, TemplateFormBuilderRepo templateFormBuilderRepo) {
-        this.templateRepo = templateRepo;
-        this.approverTemplateRepo = approverTemplateRepo;
-        this.templateFormBuilderRepo = templateFormBuilderRepo;
-    }
 
     public void createTemplate(TemplateDTO templateDTO) {
         Template existingTemplate = templateRepo.findByName(templateDTO.getName());

@@ -1,25 +1,24 @@
 package com.samsung.project.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
 @Data
 public class Template {
-    private int id;
-    private String description;
-    private String name;
-    private boolean status;
-    private int createUserId;
+    int id;
+    String description;
+    String name;
+    boolean status;
+    int createUserId;
     @JsonFormat(pattern = "a hh:mm, dd/MM/yyyy")
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt;
     @JsonFormat(pattern = "a hh:mm, dd/MM/yyyy")
-    private LocalDateTime updatedAt;
+    LocalDateTime updatedAt;
 }
