@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+import static com.samsung.project.constant.Constants.Pattern.TIME;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -18,9 +20,9 @@ public class Request {
     private String purpose;
     private String note;
     private long createUserId;
-    @JsonFormat(pattern = "a hh:mm dd/MM/yyyy")
+    @JsonFormat(pattern = TIME)
     private LocalDateTime createdAt;
-    @JsonFormat(pattern = "a hh:mm dd/MM/yyyy")
+    @JsonFormat(pattern = TIME)
     private LocalDateTime updatedAt;
     private String status;
 }

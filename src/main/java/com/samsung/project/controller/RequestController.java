@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @PreAuthorize("hasAnyRole('ADMIN','USER')")
-@RequestMapping("/api/v1/requests")
+@RequestMapping("${api.prefix}/requests")
 public class RequestController {
     private final RequestService requestService;
 

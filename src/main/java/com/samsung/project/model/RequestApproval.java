@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+import static com.samsung.project.constant.Constants.Pattern.TIME;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -16,7 +18,7 @@ public class RequestApproval {
     private int userId;
     private int requestId;
     private String approvalStatus;
-    @JsonFormat(pattern = "a hh:mm dd/MM/yyyy")
+    @JsonFormat(pattern = TIME)
     private LocalDateTime approvalTime;
     private String comment;
 }

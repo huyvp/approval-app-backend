@@ -3,7 +3,7 @@ package com.samsung.project.service;
 import com.samsung.project.dto.RequestDTO;
 import com.samsung.project.model.*;
 import com.samsung.project.repo.*;
-import com.samsung.project.response.RequestDetail;
+import com.samsung.project.response.RequestDetailResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -135,32 +135,32 @@ public class RequestService {
         }
     }
 
-    public List<RequestDetail> getAllRequest() {
+    public List<RequestDetailResponse> getAllRequest() {
         return requestRepo.findAll();
     }
 
-    public List<RequestDetail> getRequestOfUser(int userId) {
-        List<RequestDetail> requestDetails = requestRepo.findByUserId(userId);
-        if (requestDetails.isEmpty()) {
+    public List<RequestDetailResponse> getRequestOfUser(int userId) {
+        List<RequestDetailResponse> requestDetailResponses = requestRepo.findByUserId(userId);
+        if (requestDetailResponses.isEmpty()) {
             throw new RuntimeException("User has no requests");
         }
-        return requestDetails;
+        return requestDetailResponses;
     }
 
-    public List<RequestDetail> getRequestNeedProcess(int userId) {
-        List<RequestDetail> requestDetails = requestRepo.findByUserIdAndStatus(userId, AWAITING);
-        if (requestDetails.isEmpty()) {
+    public List<RequestDetailResponse> getRequestNeedProcess(int userId) {
+        List<RequestDetailResponse> requestDetailResponses = requestRepo.findByUserIdAndStatus(userId, AWAITING);
+        if (requestDetailResponses.isEmpty()) {
             throw new RuntimeException("User has no requests to process");
         }
-        return requestDetails;
+        return requestDetailResponses;
     }
 
-    public RequestDetail getRequestById(int id) {
-        RequestDetail requestDetail = requestRepo.findById(id);
-        if (requestDetail == null) {
+    public RequestDetailResponse getRequestById(int id) {
+        RequestDetailResponse requestDetailResponse = requestRepo.findById(id);
+        if (requestDetailResponse == null) {
             throw new RuntimeException("Request not found");
         }
-        return requestDetail;
+        return requestDetailResponse;
     }
 
     public String getNoteApprove(int id) {
@@ -187,7 +187,7 @@ public class RequestService {
     }
 
     public int deleteRequest(int id) {
-        RequestDetail request = requestRepo.findById(id);
+        RequestDetailResponse request = requestRepo.findById(id);
         if (request == null) {
             throw new RuntimeException("Request not found");
         }

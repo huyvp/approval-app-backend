@@ -1,9 +1,8 @@
 {
 	"info": {
-		"_postman_id": "199e9ea5-bfbe-4e58-b3b6-3e3f4a1e61ae",
+		"_postman_id": "0988a477-8816-4a67-8728-89df41606799",
 		"name": "APPROVAL",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
-		"_exporter_id": "24418910"
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
@@ -79,7 +78,7 @@
 								}
 							}
 						},
-						"url": "http://localhost:8080/api/v1/request/14"
+						"url": "{{API_PREFIX}}/request/14"
 					},
 					"response": []
 				},
@@ -93,7 +92,7 @@
 								"value": "{{token}}"
 							}
 						],
-						"url": "http://localhost:8080/api/v1/request/9"
+						"url": "{{API_PREFIX}}/request/9"
 					},
 					"response": []
 				}
@@ -109,12 +108,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzM4NCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiYXV0aG9yaXRpZXMiOlsiQURNSU4iXSwiaWF0IjoxNjg3MzcyMTg2LCJleHAiOjE2ODczNzM5ODZ9.ln9jrAynILpr7shPUMnp6yAXNY6igsAXPUeXSchqdGEnXH7WaMUesIc2FRN6OF_Q"
+								"value": "{{token}}",
+								"type": "default"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"description\": \"Template for request gwp\",\r\n    \"name\": \"gwp Template\",\r\n    \"status\": true,\r\n    \"createUserId\":2,\r\n    \"approver\":1,\r\n    \"builderData\":[\r\n        {\r\n            \"label\": \"text\",\r\n            \"placeHolder\":\"type is text\",\r\n            \"required\":\"yes\",\r\n            \"layout\":\"1/2\",\r\n            \"options\":\"option_1\",\r\n            \"createUserId\":1,\r\n            \"defaultValue\":\"max\",\r\n            \"type\":\"text\"\r\n        },\r\n        {\r\n            \"label\": \"email\",\r\n            \"placeHolder\":\"type is text\",\r\n            \"required\":\"yes\",\r\n            \"layout\":\"1/2\",\r\n            \"options\":\"option_1\",\r\n            \"createUserId\":1,\r\n            \"defaultValue\":\"max\",\r\n            \"type\":\"text\"\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"description\": \"Template for request gwp\",\r\n    \"name\": \"GWP Template\",\r\n    \"status\": true,\r\n    \"createUserId\": 4,\r\n    \"approver\": 1,\r\n    \"builderData\": [\r\n        {\r\n            \"label\": \"text\",\r\n            \"placeHolder\": \"Enter your purpose\",\r\n            \"required\": true,\r\n            \"layout\": \"1/2\",\r\n            \"options\": \"option_1\",\r\n            \"createUserId\": 1,\r\n            \"defaultValue\": \"max\",\r\n            \"type\": \"text\"\r\n        },\r\n        {\r\n            \"label\": \"email\",\r\n            \"placeHolder\": \"Enter your purpose\",\r\n            \"required\": true,\r\n            \"layout\": \"1/2\",\r\n            \"options\": \"option_1\",\r\n            \"createUserId\": 1,\r\n            \"defaultValue\": \"max\",\r\n            \"type\": \"text\"\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -158,7 +158,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzM4NCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiYXV0aG9yaXRpZXMiOlsiQURNSU4iXSwiaWF0IjoxNjg3NzA0OTQzLCJleHAiOjE2ODc3MDY3NDN9.ltFW8k4LrWrMouu4qBN-DNAZIQMk6MxQL5d8m-Oyv-G4X_nPEGH1B_Q57wdd2yMV",
+								"value": "{{token}}",
 								"type": "default"
 							}
 						],
@@ -171,7 +171,7 @@
 								}
 							}
 						},
-						"url": "http://localhost:8080/api/v1/template/detail/list"
+						"url": "{{API_PREFIX}}/template/detail/list"
 					},
 					"response": []
 				},
@@ -185,7 +185,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzM4NCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiYXV0aG9yaXRpZXMiOlsiQURNSU4iXSwiaWF0IjoxNjg3NjgyNzUzLCJleHAiOjE2ODc2ODQ1NTN9.l3qGGuYwUf6RiX-bniXYXKV_ZEpKSCOXs8AGpMveUhYWO-qyiRbYyBB9gme_5nSR",
+								"value": "{{token}}",
 								"type": "default"
 							}
 						],
@@ -198,7 +198,7 @@
 								}
 							}
 						},
-						"url": "http://localhost:8080/api/v1/template/13"
+						"url": "{{API_PREFIX}}/template/13"
 					},
 					"response": []
 				}
@@ -219,14 +219,14 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\":\"Quang nguyen\",\r\n    \"password\":\"123456\",\r\n    \"email\": \"\"\r\n}",
+							"raw": "{\r\n    \"username\":\"Huy Nguyen\",\r\n    \"password\":\"qwer1212@\",\r\n    \"email\": \"hn@test.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://localhost:8080/auth/user/add"
+						"url": "{{DOMAIN}}/auth/user/add"
 					},
 					"response": []
 				},
@@ -254,7 +254,7 @@
 								"value": "{{token}}"
 							}
 						],
-						"url": "{{API_PREFIX}}/user/id/1"
+						"url": "{{API_PREFIX}}/user/id/4"
 					},
 					"response": []
 				}
@@ -272,8 +272,7 @@
 							"    pm.collectionVariables.set(\"token\", token);\r",
 							"});"
 						],
-						"type": "text/javascript",
-						"packages": {}
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -289,7 +288,7 @@
 						}
 					}
 				},
-				"url": "http://localhost:8080/login"
+				"url": "{{DOMAIN}}/login"
 			},
 			"response": []
 		}
@@ -299,7 +298,6 @@
 			"listen": "prerequest",
 			"script": {
 				"type": "text/javascript",
-				"packages": {},
 				"exec": [
 					""
 				]
@@ -309,7 +307,6 @@
 			"listen": "test",
 			"script": {
 				"type": "text/javascript",
-				"packages": {},
 				"exec": [
 					""
 				]
@@ -321,6 +318,11 @@
 			"key": "API_PREFIX",
 			"value": "",
 			"type": "string"
+		},
+		{
+			"key": "DOMAIN",
+			"value": "",
+			"type": "default"
 		},
 		{
 			"key": "token",

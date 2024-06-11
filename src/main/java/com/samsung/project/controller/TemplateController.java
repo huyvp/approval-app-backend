@@ -1,7 +1,7 @@
 package com.samsung.project.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.samsung.project.dto.TemplateDTO;
-import com.samsung.project.model.TemplateFromBuilder;
 import com.samsung.project.service.TemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/api/v1/template")
+@RequestMapping(value = "${api.prefix}/template")
 @PreAuthorize("hasRole('ADMIN')")
 public class TemplateController {
     private final TemplateService templateService;
@@ -20,13 +20,13 @@ public class TemplateController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addTemplate(@RequestBody TemplateDTO<TemplateFromBuilder> templateDto) {
+    public ResponseEntity<?> createTemplate(@RequestBody TemplateDTO templateDto) {
         templateService.createTemplate(templateDto);
         return ResponseEntity.ok("Created template");
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateTemplate(@RequestBody TemplateDTO<TemplateFromBuilder> templateDto, @PathVariable int id) {
+    public ResponseEntity<?> updateTemplate(@RequestBody TemplateDTO templateDto, @PathVariable int id) {
         templateService.updateTemplate(templateDto, id);
         return ResponseEntity.ok("Update successfully");
 

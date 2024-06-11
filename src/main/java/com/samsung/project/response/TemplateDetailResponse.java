@@ -8,16 +8,18 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+import static com.samsung.project.constant.Constants.Pattern.TIME;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
-public class TemplateDetail {
+public class TemplateDetailResponse {
     private String id;
     private String name;
     private String description;
     private String userName;
-    @JsonFormat(pattern = "hh:mm:ss dd/MM/yyyy",timezone = "Asia/Bangkok")
+    @JsonFormat(pattern = TIME,timezone = "Asia/Bangkok")
     private LocalDateTime updatedAt;
     private boolean status;
     private int createUserId;

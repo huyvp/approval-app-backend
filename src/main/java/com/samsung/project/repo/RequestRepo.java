@@ -3,7 +3,7 @@ package com.samsung.project.repo;
 import com.samsung.project.dto.RequestDTO;
 import com.samsung.project.model.Request;
 import com.samsung.project.model.RequestFormValue;
-import com.samsung.project.response.RequestDetail;
+import com.samsung.project.response.RequestDetailResponse;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -27,26 +27,26 @@ public interface RequestRepo {
     @Select("SELECT a.purpose as requests,a.note as description,c.username as approver,a.updated_at as updatedAt,b.approval_status as status " +
             "FROM request a INNER JOIN request_approval b on b.request_id= a.id INNER JOIN users c on c.id=b.user_id " +
             "WHERE a.id=#{id}")
-    public RequestDetail findById(int id);
+    public RequestDetailResponse findById(int id);
 
     @Select("SELECT a.id,a.purpose as requests,a.note as description,c.username as approver,a.updated_at as updatedAt,a.status as status " +
             "FROM request a INNER JOIN request_approval b on b.request_id= a.id " +
             "INNER JOIN users c on c.id=b.user_id")
-    public List<RequestDetail> findAll();
+    public List<RequestDetailResponse> findAll();
 
     @Select("SELECT a.id,a.purpose as requests,a.note as description,c.username as approver,a.updated_at as updatedAt,a.status as status " +
             "From request a INNER JOIN request_approval b on b.request_id= a.id " +
             "INNER JOIN users c on c.id=b.user_id " +
             "WHERE a.create_user_id=#{id}")
 //            "limit #{pageSize} offset #{currentPage}")
-    public List<RequestDetail> findByUserId(int id);
+    public List<RequestDetailResponse> findByUserId(int id);
 
     @Select("SELECT a.id,a.purpose as requests,a.note as description,c.username as approver,a.updated_at as updatedAt,b.approval_status as status " +
             "From request a INNER JOIN request_approval b on b.request_id= a.id " +
             "INNER JOIN users c on c.id=b.user_id " +
             "WHERE b.user_id=#{id} and b.approval_status=#{status}")
 //            "limit #{pageSize} offset #{currentPage}")
-    public List<RequestDetail> findByUserIdAndStatus(int id, String status);
+    public List<RequestDetailResponse> findByUserIdAndStatus(int id, String status);
 
     @Select("SELECT * From request where id=#{id}")
     public RequestDTO<RequestFormValue> getRequestDtoById(int id);

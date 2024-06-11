@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RequestDetail {
+public class RequestDetailResponse {
     private int id;
     private String requests;
     private String description;

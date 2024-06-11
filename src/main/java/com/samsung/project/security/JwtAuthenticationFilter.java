@@ -51,16 +51,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             String username = String.valueOf(claims.get(USERNAME));
             List<String> authorities = (List<String>) claims.get(AUTHORITIES);
-            //we can get authority in here
             List<GrantedAuthority> grantedAuthorities = authorities
                     .stream()
                     .map(s -> new SimpleGrantedAuthority("ROLE_" + s.toUpperCase()))
                     .collect(Collectors.toList());
 
             UsernamePasswordAuthentication auth = new UsernamePasswordAuthentication(username, null, grantedAuthorities);
-
             SecurityContextHolder.getContext().setAuthentication(auth);
-
             filterChain.doFilter(request, response);
         }
 

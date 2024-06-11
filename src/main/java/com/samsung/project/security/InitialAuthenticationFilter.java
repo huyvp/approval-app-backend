@@ -2,9 +2,10 @@ package com.samsung.project.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.samsung.project.exception.ErrorHttpResponse;
+import com.samsung.project.exception.ErrorCode;
 import com.samsung.project.model.Authority;
 import com.samsung.project.model.User;
+import com.samsung.project.response.AppResponse;
 import com.samsung.project.service.AuthorityService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -63,7 +64,7 @@ public class InitialAuthenticationFilter extends OncePerRequestFilter {
         User user = mapper.readValue(sb.toString(), User.class);
 
         if (user.getUsername() == null || user.getPassword() == null) {
-            setResponse(HttpStatus.BAD_REQUEST,response,mapper);
+            setResponse(HttpStatus.BAD_REQUEST, response, mapper);
         } else {
             Authentication authentication = new UsernamePasswordAuthentication(user.getUsername(), user.getPassword());
             try {
@@ -76,12 +77,12 @@ public class InitialAuthenticationFilter extends OncePerRequestFilter {
                 Map<String, Object> claimsAuthorities = new HashMap<>();
                 claimsAuthorities.put(AUTHORITIES, this.getUserAuthorities(user.getUsername()));
 
-                LocalDateTime now= LocalDateTime.now().plusDays(1);
+                LocalDateTime now = LocalDateTime.now().plusDays(1);
 
                 String jwt = Jwts.builder()
                         .setClaims(claimsUsername)
                         .addClaims(claimsAuthorities)
-                        .setIssuedAt( new Date())
+                        .setIssuedAt(new Date())
                         .setExpiration(new Date(now.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()))
                         .signWith(key)
                         .compact();
@@ -94,7 +95,7 @@ public class InitialAuthenticationFilter extends OncePerRequestFilter {
                 response.getOutputStream().print(jwt);
                 response.flushBuffer();
             } catch (Exception e) {
-                setResponse(HttpStatus.UNAUTHORIZED,response,mapper);
+                setResponse(HttpStatus.UNAUTHORIZED, response, mapper);
             }
         }
 
@@ -107,17 +108,17 @@ public class InitialAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private void setResponse(HttpStatus httpStatus, HttpServletResponse response, ObjectMapper mapper) {
-        ErrorHttpResponse errorHttpResponse = ErrorHttpResponse.builder()
-                .httpStatus(httpStatus)
-                .message("username or password is not correct")
-                .dateTime(LocalDateTime.now())
-                .statusCode(httpStatus.value())
+        AppResponse<?> appResponse = AppResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .code(ErrorCode.UNAUTHORIZED.getCode())
+                .status(httpStatus)
+                .message(ErrorCode.UNAUTHORIZED.getMessage())
                 .build();
         try {
             response.resetBuffer();
             response.setStatus(httpStatus.value());
             response.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
-            response.getOutputStream().print(mapper.writeValueAsString(errorHttpResponse));
+            response.getOutputStream().print(mapper.writeValueAsString(appResponse));
             response.flushBuffer();
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
@@ -127,7 +128,7 @@ public class InitialAuthenticationFilter extends OncePerRequestFilter {
 
     private List<String> getUserAuthorities(String username) {
         List<Authority> authorities = authorityService.getAuthoritiesByUsername(username);
-        if (authorities.size() == 0) return Arrays.asList("user");
+        if (authorities.isEmpty()) return Arrays.asList("user");
         return authorities
                 .stream()
                 .map(Authority::getAuthority)

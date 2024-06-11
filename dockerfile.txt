@@ -1,0 +1,17 @@
+FORM: To pull image
+RUN: To run command	
+EXPOSE: To open port
+COPY: To coppy file & directory from host to image
+ENV: To set evironment variable
+CMD: specifies the command to run when a container is run from image
+ENTRYPOINT: specifies the command to run when a container is run from image but allow additional argument to be passted in
+ADD: Copies files from host to image, download zip/tar file from given link and extracts it auto
+AGR: Difines variable that passted to caontainer while building image
+VOLUME: Create volume inside in container for share one container volume to another
+WORKDIR: To set working directory
+MAINTAINER: To set name and email of author/user
+LABEL: To add metadata
+USER: To set user
+HEALTHCHECK: To specifies path for healthcheck
+SHELL: Specifies shell to be used to run commands
+STOP SIGNAL: Specifies the signal to sent conatiner when want to stop container gracefully
