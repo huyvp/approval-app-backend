@@ -86,13 +86,19 @@ public class InitialAuthenticationFilter extends OncePerRequestFilter {
                         .setExpiration(new Date(now.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()))
                         .signWith(key)
                         .compact();
-
+                AppResponse<Object> appResponse = AppResponse.builder()
+                        .timestamp(LocalDateTime.now())
+                        .code(2000)
+                        .status(HttpStatus.OK)
+                        .message("success")
+                        .result(jwt)
+                        .build();
                 response.setHeader(AUTHORIZATION, jwt);
                 response.addCookie(new Cookie(TOKEN, jwt));
                 response.resetBuffer();
                 response.setStatus(HttpStatus.OK.value());
                 response.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
-                response.getOutputStream().print(jwt);
+                response.getOutputStream().print(mapper.writeValueAsString(appResponse));
                 response.flushBuffer();
             } catch (Exception e) {
                 setResponse(HttpStatus.UNAUTHORIZED, response, mapper);
@@ -110,9 +116,9 @@ public class InitialAuthenticationFilter extends OncePerRequestFilter {
     private void setResponse(HttpStatus httpStatus, HttpServletResponse response, ObjectMapper mapper) {
         AppResponse<?> appResponse = AppResponse.builder()
                 .timestamp(LocalDateTime.now())
-                .code(ErrorCode.UNAUTHORIZED.getCode())
+                .code(ErrorCode.AUTH402.getCode())
                 .status(httpStatus)
-                .message(ErrorCode.UNAUTHORIZED.getMessage())
+                .message(ErrorCode.AUTH402.getMessage())
                 .build();
         try {
             response.resetBuffer();

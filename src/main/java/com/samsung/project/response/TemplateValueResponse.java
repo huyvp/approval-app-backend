@@ -1,7 +1,6 @@
 package com.samsung.project.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.samsung.project.dto.FormBuilderDTO;
 import com.samsung.project.model.TemplateFromBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,6 +9,9 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static com.samsung.project.constant.Constants.Pattern.TIME;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -20,9 +22,9 @@ public class TemplateValueResponse {
     private String name;
     private boolean status;
     private int createUserId;
-    @JsonFormat(pattern = "a hh:mm dd/MM/yyyy")
+    @JsonFormat(pattern = TIME)
     private LocalDateTime createdAt;
-    @JsonFormat(pattern = "a hh:mm dd/MM/yyyy")
+    @JsonFormat(pattern = TIME)
     private LocalDateTime updatedAt;
     private int approver;
     private List<TemplateFromBuilder> builderData;

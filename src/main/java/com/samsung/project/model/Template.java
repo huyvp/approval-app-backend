@@ -6,6 +6,8 @@ import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
 
+import static com.samsung.project.constant.Constants.Pattern.TIME;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -17,8 +19,8 @@ public class Template {
     String name;
     boolean status;
     int createUserId;
-    @JsonFormat(pattern = "a hh:mm, dd/MM/yyyy")
+    @JsonFormat(pattern = TIME)
     LocalDateTime createdAt;
-    @JsonFormat(pattern = "a hh:mm, dd/MM/yyyy")
+    @JsonFormat(pattern = TIME)
     LocalDateTime updatedAt;
 }

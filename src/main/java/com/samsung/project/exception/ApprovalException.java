@@ -8,8 +8,8 @@ import lombok.Setter;
 public class ApprovalException extends RuntimeException{
     private ErrorCode errorCode;
 
-    public ApprovalException(String message, ErrorCode errorCode) {
-        super(message);
+    public ApprovalException(ErrorCode errorCode) {
+        super(errorCode.getMessage());
         this.errorCode = errorCode;
     }
 }

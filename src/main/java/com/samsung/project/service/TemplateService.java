@@ -20,14 +20,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 @Transactional
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@RequiredArgsConstructor
 public class TemplateService {
 
-    private final TemplateRepo templateRepo;
-    private final ApproverTemplateRepo approverTemplateRepo;
-    private final TemplateFormBuilderRepo templateFormBuilderRepo;
+    TemplateRepo templateRepo;
+    ApproverTemplateRepo approverTemplateRepo;
+    TemplateFormBuilderRepo templateFormBuilderRepo;
 
     public void createTemplate(TemplateDTO templateDTO) {
         Template existingTemplate = templateRepo.findByName(templateDTO.getName());

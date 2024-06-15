@@ -1,5 +1,6 @@
 package com.samsung.project.handler;
 
+import com.samsung.project.exception.ApprovalException;
 import com.samsung.project.exception.ErrorCode;
 import com.samsung.project.response.AppResponse;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,18 @@ public class GlobalExceptionHandler {
                 .timestamp(LocalDateTime.now())
                 .code(errorCode.getCode())
                 .message(errorCode.getMessage())
-                .status(HttpStatus.BAD_REQUEST)
+                .status(errorCode.getHttpStatus())
+                .build();
+        return ResponseEntity.badRequest().body(appResponse);
+    }
+    @ExceptionHandler(ApprovalException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    ResponseEntity<AppResponse<?>> handleAppException(ApprovalException ex) {
+        AppResponse<?> appResponse = AppResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .code(ex.getErrorCode().getCode())
+                .message(ex.getErrorCode().getMessage())
+                .status(ex.getErrorCode().getHttpStatus())
                 .build();
         return ResponseEntity.badRequest().body(appResponse);
     }

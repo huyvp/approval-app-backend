@@ -13,14 +13,14 @@ import java.time.LocalDateTime;
 @Builder
 @Data
 public class UserDTO {
-    @NotBlank(message = "INVALID_USER_USERNAME")
+    @NotBlank(message = "VALID103")
     String username;
-    @NotBlank(message = "INVALID_USER_PASSWORD")
+    @NotBlank(message = "VALID104")
     String password;
     String avatar;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
-    @Email(message = "INVALID_USER_EMAIL")
+    @Email(message = "VALID105")
     String email;
     boolean status;
     String firstName;

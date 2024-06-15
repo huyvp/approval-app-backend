@@ -2,6 +2,7 @@ package com.samsung.project.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.samsung.project.dto.TemplateDTO;
+import com.samsung.project.handler.ResponseHandler;
 import com.samsung.project.service.TemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,20 +23,20 @@ public class TemplateController {
     @PostMapping
     public ResponseEntity<?> createTemplate(@RequestBody TemplateDTO templateDto) {
         templateService.createTemplate(templateDto);
-        return ResponseEntity.ok("Created template");
+        return ResponseHandler.execute(null);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateTemplate(@RequestBody TemplateDTO templateDto, @PathVariable int id) {
         templateService.updateTemplate(templateDto, id);
-        return ResponseEntity.ok("Update successfully");
+        return ResponseHandler.execute(null);
 
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteTemplate(@PathVariable int id) {
         templateService.deleteTemplate(id);
-        return ResponseEntity.ok("Delete successfully");
+        return ResponseHandler.execute(null);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','USER')")

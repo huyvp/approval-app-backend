@@ -11,6 +11,7 @@ import java.util.List;
 public interface AuthorityRepo {
     @Insert("insert into authorities(username,authority) values(#{username},#{authority})")
     int saveAuthority(Authority authority);
+
     @Select("SELECT * from authorities where username= #{username}")
     List<Authority> getAuthoritiesByUsername(String username);
 }

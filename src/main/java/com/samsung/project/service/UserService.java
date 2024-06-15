@@ -1,11 +1,14 @@
 package com.samsung.project.service;
 
 import com.samsung.project.dto.UserDTO;
+import com.samsung.project.exception.ApprovalException;
+import com.samsung.project.exception.ErrorCode;
 import com.samsung.project.mapper.UserMapper;
 import com.samsung.project.model.Authority;
 import com.samsung.project.model.User;
 import com.samsung.project.repo.AuthorityRepo;
 import com.samsung.project.repo.UserRepo;
+import com.samsung.project.response.UserResponse;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,15 +34,12 @@ public class UserService {
     public void createUser(UserDTO userDTO) {
         User existingUser = userRepo.findByName(userDTO.getUsername());
         if (existingUser != null) {
-            throw new RuntimeException("Username already exists");
+            throw new ApprovalException(ErrorCode.APP301);
         }
-        User user = User.builder()
-                .username(userDTO.getUsername())
-                .password(passwordEncoder.encode(userDTO.getPassword()))
-                .email(userDTO.getEmail())
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build();
+        User user = userMapper.toUser(userDTO);
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        user.setCreatedAt(LocalDateTime.now());
+        user.setUpdatedAt(LocalDateTime.now());
         userRepo.save(user);
 
         Authority authority = Authority.builder()
@@ -51,27 +52,32 @@ public class UserService {
     public User getUserByUserName(String username) {
         User user = this.userRepo.findByName(username);
         if (user == null) {
-            throw new RuntimeException("user not found");
+            throw new ApprovalException(ErrorCode.APP302);
         }
         return user;
     }
 
-    public User getUserById(int id) {
-        User user = this.userRepo.findUserById(id);
+    public UserResponse getUserById(int id) {
+        User user = this.userRepo.findById(id);
         if (user == null) {
-            throw new RuntimeException("user not found");
+            throw new ApprovalException(ErrorCode.APP302);
         }
-        return user;
+        return userMapper.toUserResponse(user);
     }
 
-    public List<User> getAllUser() {
-        return this.userRepo.findAll();
+    public List<UserResponse> getAllUser() {
+        List<User> users = this.userRepo.findAll();
+        List<UserResponse> userResponses = new ArrayList<>();
+        for (User user : users) {
+            userResponses.add(userMapper.toUserResponse(user));
+        }
+        return userResponses;
     }
 
     public Authority getAuthority(int id) {
         Authority authority = this.userRepo.findUserAndAuthority(id);
         if (authority == null) {
-            throw new RuntimeException("authority not found");
+            throw new RuntimeException("Authority not found");
         }
         return authority;
     }

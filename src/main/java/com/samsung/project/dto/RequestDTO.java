@@ -19,15 +19,15 @@ import static com.samsung.project.constant.Constants.Pattern.TIME;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
 public class RequestDTO<T> {
-    @Min(value = 1, message = "INVALID_ID")
+    @Min(value = 1, message = "VALID100")
     int id;
-    @Min(value = 1, message = "INVALID_ID")
+    @Min(value = 1, message = "VALID100")
     int resourceId;
-    @Size(min = 1, max = 20, message = "INVALID_REQUEST_PURPOSE")
+    @Size(min = 1, max = 20, message = "VALID101")
     String purpose;
-    @Size(min = 1, max = 200, message = "INVALID_REQUEST_NOTE")
+    @Size(min = 1, max = 200, message = "VALID102")
     String note;
-    @Min(value = 1, message = "INVALID_ID")
+    @Min(value = 1, message = "VALID100")
     long createUserId;
     @JsonFormat(pattern = TIME)
     LocalDateTime createdAt;

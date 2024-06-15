@@ -11,12 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Transactional
-@RequiredArgsConstructor
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@RequiredArgsConstructor
 public class AuthorityService {
 
-    private final AuthorityRepo authorityRepo;
+    AuthorityRepo authorityRepo;
 
     public List<Authority> getAuthoritiesByUsername(String username) {
         return this.authorityRepo.getAuthoritiesByUsername(username);
