@@ -25,8 +25,8 @@ public class UserController {
     }
 
     @GetMapping()
-    public ResponseEntity<?> getAllUser() {
-        return ResponseHandler.execute(userService.getAllUser());
+    public ResponseEntity<?> getAllUser(@RequestParam int page, @RequestParam int size) {
+        return ResponseHandler.execute(userService.getAllUser(page, size));
     }
 
     @GetMapping("/{id}")

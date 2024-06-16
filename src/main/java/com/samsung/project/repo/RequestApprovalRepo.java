@@ -3,8 +3,6 @@ package com.samsung.project.repo;
 import com.samsung.project.model.RequestApproval;
 import org.apache.ibatis.annotations.*;
 
-import java.util.List;
-
 @Mapper
 public interface RequestApprovalRepo {
     @Insert("INSERT INTO request_approval(user_id,request_id,approval_status) VALUES(#{userId},#{requestId},#{approvalStatus})")
@@ -22,7 +20,7 @@ public interface RequestApprovalRepo {
     int delete(int id);
 
     @Select("SELECT * FROM request_approval WHERE request_id=#{id}")
-    RequestApproval findByRequestId(int id);
+    RequestApproval findById(int id);
 
     @Select("SELECT comment FROM request_approval WHERE request_id=#{id}")
     String findNoteApprove(int id);

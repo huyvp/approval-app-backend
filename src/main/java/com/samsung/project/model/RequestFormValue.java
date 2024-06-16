@@ -29,13 +29,4 @@ public class RequestFormValue {
     LocalDateTime formatDateTime;
     String value;
     String type;
-
-    public static TemplateFromBuilder fromFormBuilderDTO(FormBuilderDTO formBuilderDTO) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.convertValue(formBuilderDTO, TemplateFromBuilder.class);
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

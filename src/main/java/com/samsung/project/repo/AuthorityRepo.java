@@ -10,8 +10,8 @@ import java.util.List;
 @Mapper
 public interface AuthorityRepo {
     @Insert("insert into authorities(username,authority) values(#{username},#{authority})")
-    int saveAuthority(Authority authority);
+    void save(Authority authority);
 
     @Select("SELECT * from authorities where username= #{username}")
-    List<Authority> getAuthoritiesByUsername(String username);
+    List<Authority> findByUsername(String username);
 }

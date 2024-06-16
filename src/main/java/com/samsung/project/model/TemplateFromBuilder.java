@@ -35,15 +35,4 @@ public class TemplateFromBuilder {
     LocalDateTime formatDateTime;
     String value;
     String type;
-
-    public static TemplateFromBuilder fromFormBuilderDTO(FormBuilderDTO formBuilderDTO){
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            ObjectNode jsonNode = objectMapper.valueToTree(formBuilderDTO);
-            jsonNode.remove("requestId");
-            return objectMapper.treeToValue(jsonNode, TemplateFromBuilder.class);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

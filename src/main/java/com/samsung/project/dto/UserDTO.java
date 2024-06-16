@@ -18,9 +18,8 @@ public class UserDTO {
     @NotBlank(message = "VALID104")
     String password;
     String avatar;
-    LocalDateTime createdAt;
-    LocalDateTime updatedAt;
     @Email(message = "VALID105")
+    @NotBlank(message = "VALID106")
     String email;
     boolean status;
     String firstName;

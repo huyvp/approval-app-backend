@@ -15,11 +15,13 @@ public enum ErrorCode {
     // ----------------------------------
     AUTH401(401, HttpStatus.FORBIDDEN, "Forbidden"),
     AUTH402(402, HttpStatus.UNAUTHORIZED, "Username or password is not correct"),
+    AUTH403(403, HttpStatus.UNAUTHORIZED, "Bad Credentials"),
     // ----------------------------------
     // Related to USER
     // ----------------------------------
     APP301(301, HttpStatus.BAD_REQUEST, "User existed"),
     APP302(302, HttpStatus.BAD_REQUEST, "User not found"),
+    APP303(303, HttpStatus.BAD_REQUEST, "Template not found"),
     // ----------------------------------
     // Related to VALIDATION
     // ----------------------------------
@@ -30,6 +32,10 @@ public enum ErrorCode {
     VALID103(103, HttpStatus.BAD_REQUEST, "Username name is require!"),
     VALID104(104, HttpStatus.BAD_REQUEST, "Password is require!"),
     VALID105(105, HttpStatus.BAD_REQUEST, "Email format incorrect!"),
+    VALID106(106, HttpStatus.BAD_REQUEST, "Email is require!"),
+
+    VALID107(107, HttpStatus.BAD_REQUEST, "Template description is require!"),
+    VALID108(108, HttpStatus.BAD_REQUEST, "Template name is require!"),
     ;
     private int code;
     private HttpStatus httpStatus;

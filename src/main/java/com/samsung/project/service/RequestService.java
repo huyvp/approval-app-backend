@@ -1,6 +1,7 @@
 package com.samsung.project.service;
 
 import com.samsung.project.dto.RequestDTO;
+import com.samsung.project.mapper.RequestMapper;
 import com.samsung.project.model.*;
 import com.samsung.project.repo.*;
 import com.samsung.project.response.RequestDetailResponse;
@@ -21,6 +22,7 @@ import static com.samsung.project.model.ApproveStatus.AWAITING;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class RequestService {
     RequestRepo requestRepo;
+    RequestMapper requestMapper;
     RequestApprovalRepo requestApprovalRepo;
     RequestFormValueRepo requestFormValueRepo;
     TemplateFormBuilderRepo templateFormBuilderRepo;
@@ -28,15 +30,9 @@ public class RequestService {
 
     public void createRequest(RequestDTO<RequestFormValue> requestDTO) {
         try {
-            Request request = Request.builder()
-                    .resourceId(requestDTO.getResourceId())
-                    .purpose(requestDTO.getPurpose())
-                    .note(requestDTO.getNote())
-                    .createdAt(LocalDateTime.now())
-                    .updatedAt(LocalDateTime.now())
-                    .createUserId(requestDTO.getCreateUserId())
-                    .status(requestDTO.getStatus())
-                    .build();
+            Request request = requestMapper.toRequest(requestDTO);
+            request.setCreatedAt(LocalDateTime.now());
+            request.setUpdatedAt(LocalDateTime.now());
             requestRepo.insert(request);
 
             ApproverTemplate approverTemplate = approverTemplateRepo.findById(requestDTO.getResourceId());
@@ -57,7 +53,7 @@ public class RequestService {
         }
     }
 
-    public int updateRequest(RequestDTO<RequestFormValue> requestDto, int id) {
+    public void updateRequest(RequestDTO<RequestFormValue> requestDto, int id) {
         //update Request
         Request request = new Request();
         request.setResourceId(requestDto.getResourceId());
@@ -98,7 +94,6 @@ public class RequestService {
                 requestFormValueRepo.update(requestFormValues.get(index), id, requestFormValueList.get(index).getId());
             }
         }
-        return 1;
     }
 
     private void createRequestFormValue(RequestDTO<RequestFormValue> requestDTO, int lastRequestId) {
@@ -107,21 +102,10 @@ public class RequestService {
             List<RequestFormValue> requestFormValues = requestDTO.getRequestFormData();
             int count = 0;
             for (TemplateFromBuilder item : templateFromBuilders) {
-                RequestFormValue requestFormValue = RequestFormValue.builder()
-                        .label(item.getLabel())
-                        .placeholder(item.getPlaceholder())
-                        .required(item.isRequired())
-                        .layout(item.getLayout())
-                        .options(item.getOptions())
-                        .requestId(lastRequestId)
-                        .templateId(item.getTemplateId())
-                        .createUserId(item.getCreateUserId())
-                        .createdAt(LocalDateTime.now())
-                        .updatedAt(LocalDateTime.now())
-                        .formatDateTime(item.getFormatDateTime())
-                        .value(requestFormValues.get(count).getValue())
-                        .type(item.getType())
-                        .build();
+                RequestFormValue requestFormValue = requestMapper.toTemplateFromBuilder(item);
+                requestFormValue.setCreatedAt(LocalDateTime.now());
+                requestFormValue.setUpdatedAt(LocalDateTime.now());
+                requestFormValue.setValue(requestFormValues.get(count).getValue());
                 requestFormValueRepo.insert(requestFormValue);
                 count++;
             }
@@ -181,18 +165,17 @@ public class RequestService {
         requestApprovalRepo.update(requestApproval, requestId);
     }
 
-    public int deleteRequest(int id) {
+    public void deleteRequest(int id) {
         RequestDetailResponse request = requestRepo.findById(id);
         if (request == null) {
             throw new RuntimeException("Request not found");
         }
-        RequestApproval existingApproval = requestApprovalRepo.findByRequestId(id);
+        RequestApproval existingApproval = requestApprovalRepo.findById(id);
         if (existingApproval == null) {
             throw new RuntimeException("Request approval not found");
         }
         requestApprovalRepo.delete(id);
         requestFormValueRepo.delete(id);
         requestRepo.delete(id);
-        return 1;
     }
 }

@@ -19,6 +19,6 @@ public class AuthorityService {
     AuthorityRepo authorityRepo;
 
     public List<Authority> getAuthoritiesByUsername(String username) {
-        return this.authorityRepo.getAuthoritiesByUsername(username);
+        return this.authorityRepo.findByUsername(username);
     }
 }

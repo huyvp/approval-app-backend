@@ -1,24 +1,23 @@
 package com.samsung.project.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.samsung.project.dto.TemplateDTO;
 import com.samsung.project.handler.ResponseHandler;
+import com.samsung.project.mapper.TemplateMapper;
 import com.samsung.project.service.TemplateService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "${api.prefix}/template")
 @PreAuthorize("hasRole('ADMIN')")
+@RequestMapping(value = "${api.prefix}/template")
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class TemplateController {
-    private final TemplateService templateService;
-
-    @Autowired
-    public TemplateController(TemplateService templateService) {
-        this.templateService = templateService;
-    }
+    TemplateService templateService;
 
     @PostMapping
     public ResponseEntity<?> createTemplate(@RequestBody TemplateDTO templateDto) {

@@ -3,6 +3,7 @@ package com.samsung.project.security;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.samsung.project.exception.ErrorCode;
+import com.samsung.project.handler.ResponseHandler;
 import com.samsung.project.model.Authority;
 import com.samsung.project.model.User;
 import com.samsung.project.response.AppResponse;

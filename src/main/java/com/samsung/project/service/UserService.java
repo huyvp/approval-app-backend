@@ -12,7 +12,6 @@ import com.samsung.project.response.UserResponse;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,7 +45,7 @@ public class UserService {
                 .username(userDTO.getUsername())
                 .authority("USER")
                 .build();
-        authorityRepo.saveAuthority(authority);
+        authorityRepo.save(authority);
     }
 
     public User getUserByUserName(String username) {
@@ -65,8 +64,8 @@ public class UserService {
         return userMapper.toUserResponse(user);
     }
 
-    public List<UserResponse> getAllUser() {
-        List<User> users = this.userRepo.findAll();
+    public List<UserResponse> getAllUser(int page, int size) {
+        List<User> users = this.userRepo.findAll(page * size, size);
         List<UserResponse> userResponses = new ArrayList<>();
         for (User user : users) {
             userResponses.add(userMapper.toUserResponse(user));
@@ -77,7 +76,7 @@ public class UserService {
     public Authority getAuthority(int id) {
         Authority authority = this.userRepo.findUserAndAuthority(id);
         if (authority == null) {
-            throw new RuntimeException("Authority not found");
+            throw new ApprovalException(ErrorCode.AUTH401);
         }
         return authority;
     }
@@ -85,16 +84,16 @@ public class UserService {
     public void auth(String username, String password) {
 
         if (username == null || password == null) {
-            throw new BadCredentialsException("Invalid user or password!");
+            throw new ApprovalException(ErrorCode.AUTH402);
         }
 
         User user = userRepo.findByName(username);
         if (user != null) {
             boolean isMatch = passwordEncoder.matches(password, user.getPassword());
             if (!isMatch)
-                throw new BadCredentialsException("Bad Credentials");
+                throw new ApprovalException(ErrorCode.AUTH403);
         } else {
-            throw new BadCredentialsException("Bad Credentials!");
+            throw new ApprovalException(ErrorCode.AUTH403);
         }
     }
 }

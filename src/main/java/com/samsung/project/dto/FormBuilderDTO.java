@@ -19,8 +19,6 @@ public class FormBuilderDTO {
     String options;
     int templateId;
     int createUserId;
-    LocalDateTime createdAt;
-    LocalDateTime updatedAt;
     LocalDateTime formatDateTime;
     String value;
     String type;
